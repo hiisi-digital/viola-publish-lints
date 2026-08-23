@@ -27,8 +27,29 @@ import {
 
 import { type Ecosystem, type Manifest, packageTable, readManifests } from "./manifest.ts";
 
+/**
+ * A field a manifest can carry.
+ *
+ * Declared rather than left as loose strings in the tables below. The same
+ * name appears in several of them, and with no type behind it a misspelling in
+ * one is a field nothing checks for and nobody is told about: the linter would
+ * simply never ask for it.
+ */
+type ManifestField =
+  | "name"
+  | "version"
+  | "exports"
+  | "license"
+  | "description"
+  | "repository"
+  | "homepage"
+  | "keywords"
+  | "categories"
+  | "rust-version"
+  | "readme";
+
 /** What each registry refuses to publish without. */
-const REQUIRED: Record<Ecosystem, readonly string[]> = {
+const REQUIRED: Record<Ecosystem, readonly ManifestField[]> = {
   jsr: ["name", "version", "exports", "license"],
   npm: ["name", "version", "license"],
   cargo: ["name", "version", "description", "license"],
@@ -40,7 +61,7 @@ const REQUIRED: Record<Ecosystem, readonly string[]> = {
  * `documentation` is deliberately absent for cargo: leaving it out makes crates.io link
  * docs.rs, which is what you want, so demanding it would be demanding the worse option.
  */
-const RECOMMENDED: Record<Ecosystem, readonly string[]> = {
+const RECOMMENDED: Record<Ecosystem, readonly ManifestField[]> = {
   jsr: ["description"],
   npm: ["description", "repository", "homepage", "keywords"],
   cargo: ["description", "repository", "keywords", "categories", "rust-version", "readme"],
@@ -138,7 +159,8 @@ export class PublishMetadataLinter extends BaseLinter {
     return issues;
   }
 
-  /** Keyword and category limits, docs.rs features, and the deprecated `authors`. */
+  /** Keyword and category limits, docs.rs features, and `authors`, which
+   * crates.io no longer wants in a new manifest. */
   private checkCargoSpecifics(manifest: Manifest): Issue[] {
     const issues: Issue[] = [];
     const table = packageTable(manifest);

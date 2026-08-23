@@ -21,7 +21,13 @@
  * ```
  */
 
-export { type Ecosystem, type Manifest, packageTable, readManifests, shipsABinary } from "./src/manifest.ts";
+export {
+  type Ecosystem,
+  type Manifest,
+  packageTable,
+  readManifests,
+  shipsABinary,
+} from "./src/manifest.ts";
 export { PublishMetadataLinter, publishMetadataLinter } from "./src/publish-metadata.ts";
 
 import type { ViolaPlugin } from "@hiisi/viola";

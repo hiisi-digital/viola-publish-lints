@@ -49,13 +49,15 @@ function parseJsonc(text: string): Record<string, unknown> {
 export function readManifests(projectRoot: string): Manifest[] {
   const found: Manifest[] = [];
 
-  for (const [file, ecosystem] of [
-    ["deno.json", "jsr"],
-    ["deno.jsonc", "jsr"],
-    ["jsr.json", "jsr"],
-    ["package.json", "npm"],
-    ["Cargo.toml", "cargo"],
-  ] as const) {
+  for (
+    const [file, ecosystem] of [
+      ["deno.json", "jsr"],
+      ["deno.jsonc", "jsr"],
+      ["jsr.json", "jsr"],
+      ["package.json", "npm"],
+      ["Cargo.toml", "cargo"],
+    ] as const
+  ) {
     const path = join(projectRoot, file);
     let text: string;
     try {
