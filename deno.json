@@ -25,7 +25,7 @@
     "@std/path": "jsr:@std/path@^1",
     "@std/toml": "jsr:@std/toml@^1",
     "@hiisi/viola-default-lints": "jsr:@hiisi/viola-default-lints@^0.3.1",
-    "@hiisi/viola-grammar-ts": "jsr:@hiisi/viola-grammar-ts@^0.3.1"
+    "@hiisi/viola-grammar-ts": "jsr:@hiisi/viola-grammar-ts@^0.3.2"
   },
   "tasks": {
     "check": "deno check mod.ts src/manifest.ts",
